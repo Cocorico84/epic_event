@@ -14,7 +14,8 @@ EpicEvent is a CRM to handle clients, events and contracts.
 
 # Prerequisites
 
-Python 3
+* Python 3
+* Pip
 
 # Installation
 
@@ -33,6 +34,20 @@ On Windows
 c:\Python38\python -m venv c:\path\to\myenv
 C:\\{venv}\\Scripts\\activate.bat
 pip install -r requirements.txt
+```
+If you want to use pipenv
+* 1 - install pipenv
+```shell
+$ pip install --user pipenv
+```
+* 2 - install dependencies
+```shell
+$ cd myproject
+$ pip install -r requirements.txt
+```
+* 3 - activate the virtual environnement
+```shell
+$ pipenv shell
 ```
 
 # Quickstart
