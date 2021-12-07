@@ -1,5 +1,5 @@
-![shield](https://img.shields.io/github/last-commit/Cocorico84/softdesk)
-![shield](https://img.shields.io/github/languages/code-size/cocorico84/softdesk)
+![shield](https://img.shields.io/github/last-commit/Cocorico84/epic_event)
+![shield](https://img.shields.io/github/languages/code-size/cocorico84/epic_event)
 ![shield](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![shield](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
