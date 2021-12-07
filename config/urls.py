@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from users.views import CustomUserView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('rest_framework.urls')),
+    path('register/', CustomUserView.as_view(), name='register'),
 ]
