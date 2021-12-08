@@ -94,7 +94,15 @@ To check types of the project.
 ```
 mypy .
 ```
-
+# Tests
+To launch all tests :
+```
+pytest 
+```
+To get a report. It will create a directory named "htmlcov". Then you can open index.html in a browser.
+```
+pytest --cov=. --cov-report html
+```
 # Contributor
 
 If you have any suggestions to improve the project, you can create an issue.
