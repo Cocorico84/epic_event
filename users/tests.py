@@ -1,3 +1,4 @@
+from django.http import response
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -23,4 +24,6 @@ class UserTestCase(APITestCase):
         self.assertEqual(CustomUser.objects.get().username, "spy")
 
     def test_login(self):
-        pass
+        CustomUser.objects.create_user(username='test', password='1234')
+        response = self.client.login(username='test', password='1234')
+        self.assertTrue(response)
