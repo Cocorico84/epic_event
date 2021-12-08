@@ -1,4 +1,3 @@
-from rest_framework import serializers
 from rest_framework.generics import CreateAPIView
 
 from users.models import CustomUser
