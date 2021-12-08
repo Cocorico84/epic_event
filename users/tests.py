@@ -14,10 +14,10 @@ class UserTestCase(APITestCase):
             'first_name': 'james',
             'last_name': 'bond',
             'email': 'jb@email.com',
-            'password': '1234',
-            'confirm_password': '1234',
+            'password': '007',
+            'confirm_password': '007',
         }
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(CustomUser.objects.count(), 1)
         self.assertEqual(CustomUser.objects.get().username, "spy")
