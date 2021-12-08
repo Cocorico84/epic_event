@@ -21,3 +21,6 @@ class UserTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(CustomUser.objects.count(), 1)
         self.assertEqual(CustomUser.objects.get().username, "spy")
+
+    def test_login(self):
+        pass

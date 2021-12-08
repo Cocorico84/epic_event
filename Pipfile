@@ -17,6 +17,7 @@ psycopg2-binary = "*"
 flake8-html = "*"
 pytest-django = "*"
 autopep8 = "*"
+pytest-cov = "*"
 
 [dev-packages]
 
