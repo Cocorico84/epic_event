@@ -49,6 +49,8 @@ $ pip install -r requirements.txt
 ```shell
 $ pipenv shell
 ```
+# Database setup
+TODO
 
 # Quickstart
 
@@ -97,7 +99,7 @@ mypy .
 # Tests
 To launch all tests :
 ```
-pytest 
+pytest
 ```
 To get a report. It will create a directory named "htmlcov". Then you can open index.html in a browser.
 ```

@@ -19,6 +19,7 @@ pytest-django = "*"
 autopep8 = "*"
 pytest-cov = "*"
 sentry-sdk = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
