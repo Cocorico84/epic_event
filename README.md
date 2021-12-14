@@ -50,7 +50,22 @@ $ pip install -r requirements.txt
 $ pipenv shell
 ```
 # Database setup
-TODO
+
+### 1 - Install PostgreSql
+
+```bash
+sudo apt-get install postgresql postgresql-contrib
+```
+
+### 2 - Connect to postgres
+
+```bash
+sudo -i -u postgres psql
+```
+### 3 - Create the database
+```bash
+postgres@server:~$ createdb epic
+```
 
 # Quickstart
 
