@@ -9,5 +9,5 @@ CATEGORIES = (
 
 
 class CustomUser(AbstractUser):
-    company_name = models.CharField(max_length=128)
+    company = models.CharField(max_length=128, blank=True)
     category = models.CharField(max_length=32, choices=CATEGORIES)

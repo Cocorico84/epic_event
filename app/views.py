@@ -1,18 +1,20 @@
 from rest_framework.viewsets import ModelViewSet
-from .serializers import ContractSerializer, StatusSerializer, EventSerializer
-from .models import Contract, Status, Event
+
+from .models import Contract, Event, Status
+from .permissions import IsResponsibleOfContract, IsResponsibleOfEvent
+from .serializers import ContractSerializer, EventSerializer, StatusSerializer
 
 
 class ContractView(ModelViewSet):
     queryset = Contract.objects.all().order_by('-date_created')
     serializer_class = ContractSerializer
-    permission_classes = []
+    permission_classes = [IsResponsibleOfContract]
 
 
 class EventView(ModelViewSet):
     queryset = Event.objects.all().order_by('-date_created')
     serializer_class = EventSerializer
-    permission_classes = []
+    permission_classes = [IsResponsibleOfEvent]
 
 
 class StatusView(ModelViewSet):
