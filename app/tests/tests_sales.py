@@ -27,6 +27,16 @@ class ClientTestCase(APITestCase):
         refresh = RefreshToken.for_user(self.user)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
 
+    def test_get_client(self):
+        url = reverse('client-detail', kwargs={'pk': self.client_test.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_client(self):
+        url = reverse('client-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_create_client(self):
         url = reverse('client-list')
         data = {
@@ -79,6 +89,16 @@ class ContractTestCase(APITestCase):
         )
         refresh = RefreshToken.for_user(self.user)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
+
+    def test_get_contract(self):
+        url = reverse('contract-detail', kwargs={'pk': self.contract.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_contract(self):
+        url = reverse('contract-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_contract(self):
         url = reverse('contract-list')
@@ -136,6 +156,16 @@ class EventTestCase(APITestCase):
             attendees=2,
         )
 
+    def test_get_event(self):
+        url = reverse('event-detail', kwargs={'pk': self.event.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_event(self):
+        url = reverse('event-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_create_event(self):
         url = reverse('event-list')
         data = {
@@ -192,6 +222,16 @@ class StatusTestCase(APITestCase):
             event_status=self.status,
             attendees=2,
         )
+
+    def test_get_status(self):
+        url = reverse('status-detail', kwargs={'pk': self.status.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_status(self):
+        url = reverse('status-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_status(self):
         url = reverse('status-list')

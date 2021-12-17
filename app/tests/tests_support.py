@@ -17,16 +17,26 @@ class ClientTestCase(APITestCase):
             phone='1111',
             company='Poudlard',
         )
-        self.user = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
+        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
         self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
         Contract.objects.create(
-            sales_contact=self.user,
+            sales_contact=self.sale,
             client=self.client_test,
             amount=10,
             payment_due=timezone.now()
         )
         refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
+
+    def test_get_client(self):
+        url = reverse('client-detail', kwargs={'pk': self.client_test.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_client(self):
+        url = reverse('client-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_client(self):
         url = reverse('client-list')
@@ -71,16 +81,26 @@ class ContractTestCase(APITestCase):
             phone='1111',
             company='Poudlard',
         )
-        self.user = CustomUser.objects.create_user(username='test', password='1234', category="Sales")
+        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
         self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
         self.contract = Contract.objects.create(
-            sales_contact=self.user,
+            sales_contact=self.sale,
             client=self.client_test,
             amount=10,
             payment_due=timezone.now()
         )
         refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
+
+    def test_get_contract(self):
+        url = reverse('contract-detail', kwargs={'pk': self.contract.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_contract(self):
+        url = reverse('contract-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_contract(self):
         url = reverse('contract-list')
@@ -120,15 +140,15 @@ class EventTestCase(APITestCase):
             phone='1111',
             company='Poudlard',
         )
-        self.user = CustomUser.objects.create_user(username='test', password='1234', category="Support")
+        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
         self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
         self.contract = Contract.objects.create(
-            sales_contact=self.user,
+            sales_contact=self.sale,
             client=self.client_test,
             amount=10,
             payment_due=timezone.now()
         )
-        refresh = RefreshToken.for_user(self.user)
+        refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
         self.status = Status.objects.create(status="In progress")
         self.event = Event.objects.create(
@@ -137,6 +157,16 @@ class EventTestCase(APITestCase):
             event_status=self.status,
             attendees=2,
         )
+
+    def test_get_event(self):
+        url = reverse('event-detail', kwargs={'pk': self.event.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_event(self):
+        url = reverse('event-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_event(self):
         url = reverse('event-list')
@@ -177,15 +207,15 @@ class StatusTestCase(APITestCase):
             phone='1111',
             company='Poudlard',
         )
-        self.user = CustomUser.objects.create_user(username='test', password='1234', category="Support")
+        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
         self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
         self.contract = Contract.objects.create(
-            sales_contact=self.user,
+            sales_contact=self.sale,
             client=self.client_test,
             amount=10,
             payment_due=timezone.now()
         )
-        refresh = RefreshToken.for_user(self.user)
+        refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
         self.status = Status.objects.create(status="In progress")
         self.event = Event.objects.create(
@@ -194,6 +224,16 @@ class StatusTestCase(APITestCase):
             event_status=self.status,
             attendees=2,
         )
+
+    def test_get_status(self):
+        url = reverse('status-detail', kwargs={'pk': self.status.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_status(self):
+        url = reverse('status-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_status(self):
         url = reverse('status-list')

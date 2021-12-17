@@ -28,8 +28,11 @@ class IsSupport(BasePermission):
         if request.user.is_authenticated and request.user.category == 'Support':
             if view.basename == 'event':
                 return True
-            elif view.basename in ['contract', 'client'] and request.method == 'POST':
-                return False
+            elif view.basename in ['contract', 'client']:
+                if request.method == 'POST':
+                    return False
+                elif request.method == 'GET':
+                    return True
         return False
 
     def has_object_permission(self, request: Request, view: APIView, obj: Any) -> bool:
