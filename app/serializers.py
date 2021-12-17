@@ -22,7 +22,7 @@ class ContractSerializer(ModelSerializer):
     class Meta:
         model = Contract
         fields = ('sales_contact', 'client', 'status', 'amount', 'payment_due', 'date_created', 'date_updated',)
-        read_only_fields = ('date_created', 'date_updated',)
+        read_only_fields = ('date_created', 'date_updated', 'sales_contact',)
 
     def update(self, instance, validated_data: Any):
         instance.date_updated = timezone.now().date()

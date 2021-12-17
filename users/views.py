@@ -13,7 +13,8 @@ from .serializers import CustomUserSerializer
 class CustomUserView(CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [AllowAny,]
+    permission_classes = [AllowAny, ]
+
 
 class LogoutView(APIView):
     def get(self, request, format=None):
