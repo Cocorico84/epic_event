@@ -11,7 +11,7 @@ class CustomUserSerializer(ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'company', 'category',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'category',)
         extra_kwargs = {'password': {'required': True}}
 
     def validate(self, attrs: Any) -> Any:
@@ -25,7 +25,6 @@ class CustomUserSerializer(ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            company=validated_data['company'],
             category=validated_data['category']
         )
         user.set_password(validated_data['password'])

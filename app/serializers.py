@@ -3,7 +3,18 @@ from typing import Any
 from django.utils import timezone
 from rest_framework.serializers import ModelSerializer
 
-from .models import Contract, Event, Status
+from .models import Client, Contract, Event, Status
+
+
+class ClientSerializer(ModelSerializer):
+    class Meta:
+        model = Client
+        fields = ('first_name', 'last_name', 'email', 'phone', 'company', 'date_updated', 'date_updated',)
+        read_only_fields = ('date_created', 'date_updated',)
+
+    def update(self, instance, validated_data: Any):
+        instance.date_updated = timezone.now().date()
+        return super().update(instance, validated_data)
 
 
 class ContractSerializer(ModelSerializer):

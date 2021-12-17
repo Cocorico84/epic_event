@@ -16,6 +16,7 @@ class UserTestCase(APITestCase):
             'email': 'jb@email.com',
             'password': '007',
             'confirm_password': '007',
+            'category': 'SALES',
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -26,3 +27,10 @@ class UserTestCase(APITestCase):
         CustomUser.objects.create_user(username='test', password='1234')
         response = self.client.login(username='test', password='1234')
         self.assertTrue(response)
+    
+    def test_logout(self):
+        CustomUser.objects.create_user(username='test', password='1234')
+        self.client.login(username='test', password="1234")
+        response = self.client.get("/logout")
+        self.assertEqual(response.status_code, 301)
+
