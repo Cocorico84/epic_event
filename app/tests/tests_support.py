@@ -1,30 +1,15 @@
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework import status
-from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
-from users.models import CustomUser
 
 from ..models import Client, Contract, Event, Status
+from .utils import EpicTestCase
 
 
-class ClientTestCase(APITestCase):
+class ClientTestCase(EpicTestCase):
     def setUp(self):
-        self.client_test = Client.objects.create(
-            first_name='harry',
-            last_name='potter',
-            email='hp@email.com',
-            phone='1111',
-            company='Poudlard',
-        )
-        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
-        self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
-        Contract.objects.create(
-            sales_contact=self.sale,
-            client=self.client_test,
-            amount=10,
-            payment_due=timezone.now()
-        )
+        super().setUp()
         refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
 
@@ -72,23 +57,9 @@ class ClientTestCase(APITestCase):
         self.assertEqual(Client.objects.count(), 1)
 
 
-class ContractTestCase(APITestCase):
+class ContractTestCase(EpicTestCase):
     def setUp(self):
-        self.client_test = Client.objects.create(
-            first_name='harry',
-            last_name='potter',
-            email='hp@email.com',
-            phone='1111',
-            company='Poudlard',
-        )
-        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
-        self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
-        self.contract = Contract.objects.create(
-            sales_contact=self.sale,
-            client=self.client_test,
-            amount=10,
-            payment_due=timezone.now()
-        )
+        super().setUp()
         refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
 
@@ -131,32 +102,11 @@ class ContractTestCase(APITestCase):
         self.assertEqual(Contract.objects.count(), 1)
 
 
-class EventTestCase(APITestCase):
+class EventTestCase(EpicTestCase):
     def setUp(self):
-        self.client_test = Client.objects.create(
-            first_name='harry',
-            last_name='potter',
-            email='hp@email.com',
-            phone='1111',
-            company='Poudlard',
-        )
-        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
-        self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
-        self.contract = Contract.objects.create(
-            sales_contact=self.sale,
-            client=self.client_test,
-            amount=10,
-            payment_due=timezone.now()
-        )
+        super().setUp()
         refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
-        self.status = Status.objects.create(status="In progress")
-        self.event = Event.objects.create(
-            client=self.client_test,
-            support_contact=self.support,
-            event_status=self.status,
-            attendees=2,
-        )
 
     def test_get_event(self):
         url = reverse('event-detail', kwargs={'pk': self.event.pk})
@@ -191,39 +141,40 @@ class EventTestCase(APITestCase):
         self.event.refresh_from_db()
         self.assertEqual(self.event.attendees, 42)
 
+    def test_update_event_with_another_support(self):
+        refresh = RefreshToken.for_user(self.support_2)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
+        refresh = RefreshToken.for_user(self.support_2)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
+        url = reverse('event-detail', kwargs={'pk': self.event.pk})
+        data = {
+            "attendees": 42
+        }
+        response = self.client.patch(url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.event.refresh_from_db()
+        self.assertEqual(self.event.attendees, 2)
+
     def test_delete_event(self):
         url = reverse('event-detail', kwargs={'pk': self.event.pk})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Event.objects.count(), 0)
 
+    def test_delete_event_with_another_support(self):
+        refresh = RefreshToken.for_user(self.support_2)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
+        url = reverse('event-detail', kwargs={'pk': self.event.pk})
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(Event.objects.count(), 1)
 
-class StatusTestCase(APITestCase):
+
+class StatusTestCase(EpicTestCase):
     def setUp(self):
-        self.client_test = Client.objects.create(
-            first_name='harry',
-            last_name='potter',
-            email='hp@email.com',
-            phone='1111',
-            company='Poudlard',
-        )
-        self.sale = CustomUser.objects.create_user(username='test', password='1234', category="Sale")
-        self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
-        self.contract = Contract.objects.create(
-            sales_contact=self.sale,
-            client=self.client_test,
-            amount=10,
-            payment_due=timezone.now()
-        )
+        super().setUp()
         refresh = RefreshToken.for_user(self.support)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
-        self.status = Status.objects.create(status="In progress")
-        self.event = Event.objects.create(
-            client=self.client_test,
-            support_contact=self.support,
-            event_status=self.status,
-            attendees=2,
-        )
 
     def test_get_status(self):
         url = reverse('status-detail', kwargs={'pk': self.status.pk})
