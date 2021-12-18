@@ -36,9 +36,6 @@ class IsSupport(BasePermission):
         return False
 
     def has_object_permission(self, request: Request, view: APIView, obj: Any) -> bool:
-        if request.method in SAFE_METHODS:
-            return True
-
         if isinstance(obj, Client) or isinstance(obj, Contract):
             return False
         return obj.client.client_events.filter(support_contact=request.user).exists()
