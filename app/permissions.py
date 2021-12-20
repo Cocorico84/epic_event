@@ -7,7 +7,7 @@ from app.models import Client, Contract, Event
 
 
 class IsSales(BasePermission):
-    def has_permission(self, request: Request, view: APIView) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         return request.user.is_authenticated and request.user.category == 'Sale'
 
     def has_object_permission(self, request: Request, view: APIView, obj: Any) -> bool:
@@ -24,7 +24,7 @@ class IsSales(BasePermission):
 
 
 class IsSupport(BasePermission):
-    def has_permission(self, request: Request, view: APIView) -> bool:
+    def has_permission(self, request: Request, view) -> bool:
         if request.user.is_authenticated and request.user.category == 'Support':
             if view.basename == 'event':
                 return True
@@ -35,7 +35,7 @@ class IsSupport(BasePermission):
                     return True
         return False
 
-    def has_object_permission(self, request: Request, view: APIView, obj: Any) -> bool:
+    def has_object_permission(self, request: Request, view, obj: Any) -> bool:
         if isinstance(obj, Client) or isinstance(obj, Contract):
             return False
         return obj.client.client_events.filter(support_contact=request.user).exists()

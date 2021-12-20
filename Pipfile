@@ -20,6 +20,7 @@ autopep8 = "*"
 pytest-cov = "*"
 sentry-sdk = "*"
 djangorestframework-simplejwt = "*"
+django-filter = "*"
 
 [dev-packages]
 

@@ -26,6 +26,9 @@ class Contract(models.Model):
 class Status(models.Model):
     status = models.CharField(max_length=64)
 
+    class Meta:
+        verbose_name_plural = "statuses"
+
 
 class Event(models.Model):
     client = models.ForeignKey(to=Client, on_delete=models.CASCADE, related_name='client_events')
