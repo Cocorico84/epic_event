@@ -21,6 +21,8 @@ pytest-cov = "*"
 sentry-sdk = "*"
 djangorestframework-simplejwt = "*"
 django-filter = "*"
+coverage = "*"
+coverage-badge = "*"
 
 [dev-packages]
 

@@ -62,9 +62,14 @@ sudo apt-get install postgresql postgresql-contrib
 ```bash
 sudo -i -u postgres psql
 ```
-### 3 - Create the database
+### 3 - Choose database
+```
+postgres=# \c epic;
+```
+
+### 4 - Create the database
 ```bash
-postgres@server:~$ createdb epic
+create database epic;
 ```
 
 # Quickstart

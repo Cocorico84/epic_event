@@ -23,7 +23,7 @@ class EpicTestCase(APITestCase):
             sales_contact=self.sale,
             client=self.client_test,
             amount=10,
-            payment_due=timezone.now()
+            payment_due=str(timezone.now().date())
         )
         self.status = Status.objects.create(status="In progress")
         self.event = Event.objects.create(
