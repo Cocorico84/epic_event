@@ -8,7 +8,7 @@ from app.models import Client, Contract, Event
 
 class IsSales(BasePermission):
     def has_permission(self, request: Request, view) -> bool:
-        return request.user.is_authenticated and request.user.category == 'Sale'
+        return request.user.is_authenticated and request.user.category == 'SALES'
 
     def has_object_permission(self, request: Request, view: APIView, obj: Any) -> bool:
         if request.method in SAFE_METHODS:
@@ -25,7 +25,7 @@ class IsSales(BasePermission):
 
 class IsSupport(BasePermission):
     def has_permission(self, request: Request, view) -> bool:
-        if request.user.is_authenticated and request.user.category == 'Support':
+        if request.user.is_authenticated and request.user.category == 'SUPPORT':
             if view.basename == 'event':
                 return True
             elif view.basename in ['contract', 'client']:

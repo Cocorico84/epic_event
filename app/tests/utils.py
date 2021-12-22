@@ -14,10 +14,10 @@ class EpicTestCase(APITestCase):
             phone='1111',
             company='Poudlard',
         )
-        self.sale = CustomUser.objects.create_user(username='sale', password='1234', category="Sale")
-        self.sale_2 = CustomUser.objects.create_user(username='sale_2', password='1234', category="Sale")
-        self.support = CustomUser.objects.create_user(username='support', password='1234', category="Support")
-        self.support_2 = CustomUser.objects.create_user(username='support_2', password='1234', category="Support")
+        self.sale = CustomUser.objects.create_user(username='sale', password='1234', category="SALES")
+        self.sale_2 = CustomUser.objects.create_user(username='sale_2', password='1234', category="SALES")
+        self.support = CustomUser.objects.create_user(username='support', password='1234', category="SUPPORT")
+        self.support_2 = CustomUser.objects.create_user(username='support_2', password='1234', category="SUPPORT")
 
         self.contract = Contract.objects.create(
             sales_contact=self.sale,
