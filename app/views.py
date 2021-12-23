@@ -20,7 +20,7 @@ class ClientView(ModelViewSet):
 
 
 class ContractView(ModelViewSet):
-    queryset = Contract.objects.all().order_by('-date_created')
+    queryset = Contract.objects.all()
     serializer_class = ContractSerializer
     permission_classes = [IsSales | IsSupport]
 
@@ -29,7 +29,7 @@ class ContractView(ModelViewSet):
 
 
 class EventView(ModelViewSet):
-    queryset = Event.objects.all().order_by('-date_created')
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsSales | IsSupport]
 

@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 
 from .models import Client, Contract, Event, Status
+from users.models import CustomUser
 
 
 class ClientSerializer(ModelSerializer):
@@ -11,14 +12,21 @@ class ClientSerializer(ModelSerializer):
 
 
 class ContractSerializer(ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['sales_contact'].queryset = CustomUser.objects.filter(category="SALES")
 
     class Meta:
         model = Contract
         fields = ('sales_contact', 'client', 'status', 'amount', 'payment_due', 'date_created', 'date_updated',)
-        read_only_fields = ('date_created', 'date_updated', 'sales_contact',)
+        read_only_fields = ('date_created', 'date_updated')
 
 
 class EventSerializer(ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['support_contact'].queryset = CustomUser.objects.filter(category="SUPPORT")
+
     class Meta:
         model = Event
         fields = ('client', 'support_contact', 'event_status', 'date_created',
