@@ -34,7 +34,7 @@ class EventView(ModelViewSet):
     permission_classes = [IsSales | IsSupport]
 
     def perform_create(self, serializer):
-        if self.request.user.category == 'Support':
+        if self.request.user.category == 'SUPPORT':
             serializer.save(support_contact=self.request.user)
         serializer.save()
 
