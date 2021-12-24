@@ -23,6 +23,10 @@ class ContractView(ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
     permission_classes = [IsSales | IsSupport]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['sales_contact',]
+    search_fields = ['sales_contact']
+    ordering_fields = ['sales_contact']
 
     def perform_create(self, serializer):
         serializer.save(sales_contact=self.request.user)
@@ -32,6 +36,10 @@ class EventView(ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsSales | IsSupport]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['support_contact', 'client']
+    search_fields = ['support_contact', 'client']
+    ordering_fields = ['support_contact', 'client']
 
     def perform_create(self, serializer):
         if self.request.user.category == 'SUPPORT':
