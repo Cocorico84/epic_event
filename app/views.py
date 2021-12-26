@@ -24,7 +24,7 @@ class ContractView(ModelViewSet):
     serializer_class = ContractSerializer
     permission_classes = [IsSales | IsSupport]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['sales_contact',]
+    filterset_fields = ['sales_contact', ]
     search_fields = ['sales_contact']
     ordering_fields = ['sales_contact']
 

@@ -1,5 +1,4 @@
 from typing import Any
-from django.contrib.auth.models import AnonymousUser
 
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 from rest_framework.request import Request
@@ -16,11 +15,11 @@ class IsSales(BasePermission):
             return True
 
         if isinstance(obj, Client):
-            return obj.client_contracts.filter(sales_contact=request.user).exists() # type: ignore
+            return obj.client_contracts.filter(sales_contact=request.user).exists()  # type: ignore
         elif isinstance(obj, Contract):
             return request.user == obj.sales_contact
         elif isinstance(obj, Event):
-            return obj.client.client_contracts.filter(sales_contact=request.user).exists() # type: ignore
+            return obj.client.client_contracts.filter(sales_contact=request.user).exists()  # type: ignore
         return False
 
 

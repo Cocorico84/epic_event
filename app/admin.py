@@ -1,10 +1,8 @@
-from django.contrib import admin
-
-from .models import Client, Contract, Event, Status
-from users.models import CustomUser
-
 from django import forms
 from django.contrib import admin
+from users.models import CustomUser
+
+from .models import Client, Contract, Event, Status
 
 
 class ContractModelForm(forms.ModelForm):
@@ -33,6 +31,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ("id", "first_name", "last_name", "email", "phone", "company", "date_created",)
     list_filter = ("date_created", "date_updated")
 
+
 class EventModelForm(forms.ModelForm):
     class Meta:
         model = CustomUser
@@ -41,6 +40,7 @@ class EventModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['support_contact'].queryset = CustomUser.objects.filter(category="SUPPORT")
+
 
 class EventAdmin(admin.ModelAdmin):
     form = EventModelForm
