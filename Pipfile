@@ -23,6 +23,7 @@ djangorestframework-simplejwt = "*"
 django-filter = "*"
 coverage = "*"
 coverage-badge = "*"
+python-dotenv = "*"
 
 [dev-packages]
 autopep8 = "*"

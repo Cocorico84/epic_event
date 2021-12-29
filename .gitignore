@@ -6,3 +6,4 @@ flake8-report/
 .coverage
 htmlcov/
 .vscode/
+.env

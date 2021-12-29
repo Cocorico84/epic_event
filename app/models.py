@@ -5,7 +5,7 @@ from django.db import models
 class Client(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone = models.IntegerField()
     company = models.CharField(max_length=32)
     date_updated = models.DateField(auto_now=True)
